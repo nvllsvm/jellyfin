@@ -11,10 +11,11 @@ RUN tar -xzvf qemu-arm-static.tar.gz
 FROM microsoft/dotnet:${DOTNET_VERSION}-sdk-stretch as builder
 WORKDIR /repo
 COPY . .
-#TODO Remove or update the sed line when we update dotnet version.
-RUN export DOTNET_CLI_TELEMETRY_OPTOUT=1 \
- && find . -type f -exec sed -i 's/netcoreapp2.1/netcoreapp3.0/g' {} \; \
- && dotnet publish \
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+# TODO Remove or update the sed line when we update dotnet version.
+RUN find . -type f -exec sed -i 's/netcoreapp2.1/netcoreapp3.0/g' {} \;
+# Build
+RUN dotnet publish \
     -r linux-arm \
     --configuration release \
     --output /jellyfin \
