@@ -4,7 +4,6 @@ FROM microsoft/dotnet:${DOTNET_VERSION}-sdk as builder
 WORKDIR /repo
 COPY . .
 RUN export DOTNET_CLI_TELEMETRY_OPTOUT=1 \
- && dotnet clean \
  && dotnet publish \
     --configuration release \
     --output /jellyfin \
